@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  
+
   def index
-    
+    # @items = Item.all
   end
 
   def new
@@ -10,11 +10,11 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = Item.create(item_params)
     if @item.save
       redirect_to root_path # トップページにリダイレクト
     else
-      render :new # 保存に失敗した場合は、newアクションのビューを再表示
+      render :new, status: :unprocessable_entity
     end
   end
 
