@@ -10,7 +10,12 @@ class Item < ApplicationRecord
   validates :shipping_charge_id, presence: true, numericality: { other_than: 0 }
   validates :prefecture_id,   presence: true, numericality: { other_than: 0 }
   validates :days_to_ship_id, presence: true, numericality: { other_than: 0 }
-  validates :price,           presence: true
+  validates :price,           presence: true, 
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 300,
+      less_than_or_equal_to: 9999999
+    }
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
