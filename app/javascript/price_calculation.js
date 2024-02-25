@@ -1,5 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
+const calculateProfit = () => {
   const priceInput = document.getElementById("item-price");
+  if (!priceInput) { return false; } // item-priceがないページでは何もしない
+
   priceInput.addEventListener("input", () => {
     const inputValue = priceInput.value;
 
@@ -11,4 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('add-tax-price').innerText = addTaxPrice;
     document.getElementById('profit').innerText = profit;
   });
-});
+};
+
+window.addEventListener("turbo:load", calculateProfit);
+window.addEventListener("turbo:render", calculateProfit);

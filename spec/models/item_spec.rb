@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @user = FactoryBot.create(:user) # 必要に応じてユーザーファクトリを作成してください
+    @user = FactoryBot.create(:user)
     @item = FactoryBot.build(:item, user: @user)
   end
 
@@ -81,28 +81,35 @@ RSpec.describe Item, type: :model do
       end
 
       it 'priceが全角数値では保存できないこと' do
-        @item.price = '１０００' # 全角数値
+        @item.price = '１０００'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
 
       it 'priceが英字では保存できないこと' do
-        @item.price = 'abc' # 英字
+        @item.price = 'abc'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
 
       it 'priceが英数字混合では保存できないこと' do
-        @item.price = '1000yen' # 英数字混合
+        @item.price = '1000yen'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
 
       it 'priceが記号を含む場合は保存できないこと' do
-        @item.price = '1,000' # 記号を含む
+        @item.price = '1,000'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+
+      it 'userが紐づいていなければ保存できない' do
+        @item.user = nil # userを紐づけない
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
+
     end
   end
 end
