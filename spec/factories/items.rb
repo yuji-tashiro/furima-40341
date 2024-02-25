@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :item do
     association :user # ItemがUserに属していることを想定
 
-    name { "テストアイテム" }
-    description { "これはテスト用のアイテムです。" }
+    name { 'テストアイテム' }
+    description { 'これはテスト用のアイテムです。' }
     category_id { 1 }
     condition_id { 1 }
     shipping_charge_id { 1 }
