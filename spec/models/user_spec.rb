@@ -1,21 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   before do
     @user = FactoryBot.build(:user)
   end
 
-  describe 'ユーザー新規登録' do 
-
-    context '新規登録がうまくいく時' do 
+  describe 'ユーザー新規登録' do
+    context '新規登録がうまくいく時' do
       it '必須項目が全て存在すれば登録できる' do
         expect(@user).to be_valid
       end
     end
 
     context '新規登録がうまくいかない時' do
-
       it 'ニックネームが必須であること' do
         @user.nickname = ''
         @user.valid?
@@ -73,14 +70,14 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password は半角英字と数字をそれぞれ1文字以上含む必要があります')
       end
-      
+
       it 'パスワードが数字のみでは登録できないこと' do
         @user.password = '123456'
         @user.password_confirmation = '123456'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password は半角英字と数字をそれぞれ1文字以上含む必要があります')
       end
-      
+
       it 'パスワードに全角文字が含まれる場合は登録できないこと' do
         @user.password = 'abc123全'
         @user.password_confirmation = 'abc123全'
@@ -105,7 +102,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name can't be blank")
       end
-      
+
       it 'last_nameが全角でなければ登録できない' do
         @user.last_name = 'taro'
         @user.valid?
@@ -123,7 +120,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kana is invalid')
       end
-      
+
       it 'last_name_kanaが空では登録できないこと' do
         @user.last_name_kana = ''
         @user.valid?
@@ -141,9 +138,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday can't be blank")
       end
-
     end
-
   end
-
 end
