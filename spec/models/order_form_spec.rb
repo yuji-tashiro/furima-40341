@@ -38,13 +38,13 @@ RSpec.describe OrderForm, type: :model do
       it '郵便番号にハイフンがないと保存できない' do
         @order_form.postal_code = '1234567'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Postal code はハイフンを含む7桁で入力してください")
+        expect(@order_form.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
       end
 
       it '都道府県が選択されていないと保存できない' do
         @order_form.prefecture_id = 0
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include('Prefecture must be other than 0')
+        expect(@order_form.errors.full_messages).to include("Prefecture can't be blank")
       end
 
       it '市区町村が空だと保存できない' do
@@ -68,19 +68,19 @@ RSpec.describe OrderForm, type: :model do
       it '電話番号にハイフンがあると保存できない' do
         @order_form.phone_number = '090-1234-5678'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number はハイフンなしの10桁または11桁で入力してください")
+        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
       end
 
       it '電話番号が12桁以上だと保存できない' do
         @order_form.phone_number = '090123456789'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number はハイフンなしの10桁または11桁で入力してください")
+        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
       end
 
       it '電話番号が9桁以下だと保存できない' do
         @order_form.phone_number = '090123456'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number はハイフンなしの10桁または11桁で入力してください")
+        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
       end
 
       it 'user_idが空だと保存できない' do
