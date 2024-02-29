@@ -4,21 +4,14 @@ RSpec.describe OrderForm, type: :model do
   before do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item, user: user)
-    @order_form = OrderForm.new(
-      user_id: user.id,
-      item_id: item.id,
-      postal_code: "123-4567",
-      prefecture_id: 1,
-      city: "渋谷区",
-      address: "渋谷109",
-      building_name: "渋谷ビル101",
-      phone_number: "09012345678"
-    )
+    @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
   end
 
   describe '商品購入' do
+
     context '購入がうまくいくとき' do
-      it 'すべての値が正しく入力されていれば保存できること' do
+
+      it 'すべての値とトークンがあれば保存できること' do
         expect(@order_form).to be_valid
       end
 
@@ -29,6 +22,12 @@ RSpec.describe OrderForm, type: :model do
     end
 
     context 'バリデーションに失敗する場合' do
+
+      it 'トークンが空では保存できないこと' do
+        @order_form.token = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Token can't be blank")
+      end
       it '郵便番号が空だと保存できない' do
         @order_form.postal_code = ''
         @order_form.valid?
