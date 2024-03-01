@@ -22,7 +22,6 @@ const pay = () => {
         e.preventDefault(); // フォームの送信を阻止
         payjp.createToken(numberElement).then(function (response) {
           if (response.error) {
-            // エラーハンドリングをここに記述
           } else {
             const token = response.id;
             const renderDom = document.getElementById("charge-form");

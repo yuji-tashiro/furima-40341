@@ -31,7 +31,7 @@
     </div>
     <%# /支払額の表示 %>
 
-    <%= form_with model: @order_form, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
+  <%= form_with model: @order_form, url: item_orders_path, data: { turbo: false }, id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
     
     <%= render 'shared/error_messages', model: f.object %>
 
@@ -122,9 +122,9 @@
     </div>
     <%# /配送先の入力 %>
     <div class='buy-btn'>
-      <%= f.submit "購入" ,class:"buy-red-btn", id:"button" %>
+      <%= f.submit "購入", class:"buy-red-btn", id:"button" %>
     </div>
-    <% end %>
+  <% end %>
   </div>
 </div>
 <%= render "shared/second-footer"%>
